@@ -213,7 +213,7 @@ fco* fco_create(fco* co, pfunc_co pf, int type)
 static
 void co_main(uint32_t co_low32, uint32_t co_hi32)
 {
-    long long_co = (long)co_low32 | ((long)co_hi32 << 32);
+    long long_co = (long long)co_low32 | ((long long)co_hi32 << 32);
     fco* co = (fco*)long_co;
     void* arg = (void*)co->owner->arg;
 
@@ -254,7 +254,7 @@ void* fco_resume(fco* co, void* arg)
             co->ctx.uc_link = co->prev_ctx;
             co->owner->arg = arg;
             co->status = FCO_STATUS_RUNNING;
-            long lco = (long)co;
+            long long lco = (long)co;
             makecontext(&co->ctx, (void (*)(void)) co_main, 2, (uint32_t)lco,
                         (uint32_t)(lco >> 32));
             _fco_call_plugin(co, 0);
